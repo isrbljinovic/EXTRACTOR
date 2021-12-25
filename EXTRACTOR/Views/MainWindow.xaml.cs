@@ -34,7 +34,7 @@ namespace EXTRACTOR
                 foreach (string filename in openFileDialog.FileNames)
                     newList.Add(new DocumentOptions { Name = Path.GetFileName(filename), DocumentPath = filename });
             }
-            _vm.Pdfs = new List<DocumentOptions>(newList);
+            _vm.Pdfs = new System.Collections.ObjectModel.ObservableCollection<DocumentOptions>(newList);
         }
     }
 }

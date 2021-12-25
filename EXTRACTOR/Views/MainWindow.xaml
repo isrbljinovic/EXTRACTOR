@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utilities="clr-namespace:EXTRACTOR.Utilities"
     Title="EXTRACTOR"
@@ -49,6 +50,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="2.5,5,5,5"
+                Command="{Binding DeleteCommand}"
                 Content="Delete" />
         </Grid>
         <!--#endregion-->
@@ -68,12 +70,15 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Content="Unesite brojeve tablica" />
-            <TextBox Grid.Row="1" Margin="5,0,5,5" />
+            <TextBox
+                Grid.Row="1"
+                Margin="5,0,5,5"
+                Text="{Binding SelectedItem.Tables}" />
             <Label Grid.Row="2" Content="Odaberite konverziju" />
             <ComboBox
                 Grid.Row="3"
                 Margin="5,0,5,100"
-                ItemsSource="{Binding Conversions}"
+                ItemsSource="{Binding SelectedItem.Conversions}"
                 SelectedItem="{Binding SelectedItem.Conversion}" />
             <Button
                 Grid.Row="4"

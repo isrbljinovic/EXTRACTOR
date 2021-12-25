@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using EXTRACTOR.Models;
 using EXTRACTOR_Engine.Contracts;
+using EXTRACTOR_Engine.Enums;
 using EXTRACTOR_Engine.Services;
 using Microsoft.VisualStudio.PlatformUI;
 
@@ -21,23 +22,17 @@ namespace EXTRACTOR.ViewModels
             set { _selectedItem = value; HandlePropertyChanged(); }
         }
 
-        private List<DocumentOptions> _pdfs;
+        private ObservableCollection<DocumentOptions> _pdfs;
 
-        public List<DocumentOptions> Pdfs
+        public ObservableCollection<DocumentOptions> Pdfs
         {
             get { return _pdfs; }
             set { _pdfs = value; HandlePropertyChanged(); }
         }
 
-        public List<string> Conversions { get; set; } = new List<string>
-        {
-            "Prebaci u CSV",
-            "Prebaci u jednu Excel datoteku",
-            "Prebaci u različite Excel datoteke",
-            "Generiraj SQL"
-        };
-
         #endregion Properties
+
+        #region Commands
 
         private ICommand _generateCommand;
 
@@ -46,23 +41,42 @@ namespace EXTRACTOR.ViewModels
             get { return _generateCommand ?? (_generateCommand = new DelegateCommand(Generate)); }
         }
 
-        private IPythonScriptRunner pythonScriptRunner;
-
-        public MainWindowViewModel()
-        {
-            Pdfs = new List<DocumentOptions>();
-            pythonScriptRunner = new PythonScriptRunner();
-        }
-
         private void Generate()
         {
             foreach (var doc in Pdfs)
             {
-                pythonScriptRunner.RunScript(@"C:\Python310\python.exe", $"{doc.DocumentPath} {doc.Name}", doc.Conversion);
+                pythonScriptRunner.RunScript(@"C:\Python310\python.exe", $"{doc.DocumentPath} {doc.Name} {doc.Tables}", ActionsExtensions.GetAction(doc.Conversion));
             }
 
-            Pdfs = new List<DocumentOptions>();
+            Pdfs = new ObservableCollection<DocumentOptions>();
             SelectedItem = null;
+        }
+
+        private ICommand _deleteCommand;
+
+        public ICommand DeleteCommand
+        {
+            get { return _deleteCommand ?? (_deleteCommand = new DelegateCommand(Delete)); }
+        }
+
+        private void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                _pdfs.Remove(SelectedItem);
+                SelectedItem = null;
+                HandlePropertyChanged("Pdfs");
+            }
+        }
+
+        #endregion Commands
+
+        private IPythonScriptRunner pythonScriptRunner;
+
+        public MainWindowViewModel()
+        {
+            Pdfs = new ObservableCollection<DocumentOptions>();
+            pythonScriptRunner = new PythonScriptRunner();
         }
 
         #region PropertyChangedHandler

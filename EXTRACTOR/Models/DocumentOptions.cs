@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EXTRACTOR_Engine.Enums;
 
 namespace EXTRACTOR.Models
 {
@@ -7,7 +6,15 @@ namespace EXTRACTOR.Models
     {
         public string Name { get; set; }
         public string DocumentPath { get; set; }
-        public List<int> TablesToConvert { get; set; } = new List<int>();
-        public Actions Conversion { get; set; } = Actions.ToOneFile;
+        public string Tables { get; set; } = string.Empty;
+        public string Conversion { get; set; }
+
+        public List<string> Conversions { get; set; } = new List<string>
+        {
+            "Prebaci u CSV",
+            "Prebaci u jednu Excel datoteku",
+            "Prebaci u različite Excel datoteke",
+            "Generiraj SQL"
+        };
     }
 }

@@ -32,5 +32,26 @@ namespace EXTRACTOR_Engine.Enums
                     throw new ArgumentException();
             }
         }
+
+        public static Actions GetAction(string action)
+        {
+            switch (action)
+            {
+                case "Prebaci u CSV":
+                    return Actions.ToCSVs;
+
+                case "Prebaci u jednu Excel datoteku":
+                    return Actions.ToOneFile;
+
+                case "Prebaci u različite Excel datoteke":
+                    return Actions.ToSeparateFiles;
+
+                case "Generiraj SQL":
+                    return Actions.ToSQL;
+
+                default:
+                    return Actions.ToOneFile;
+            }
+        }
     }
 }
