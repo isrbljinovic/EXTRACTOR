@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using EXTRACTOR.Models;
@@ -35,6 +34,7 @@ namespace EXTRACTOR
                     newList.Add(new DocumentOptions { Name = Path.GetFileName(filename), DocumentPath = filename });
             }
             _vm.Pdfs = new System.Collections.ObjectModel.ObservableCollection<DocumentOptions>(newList);
+            _vm.Progress = string.Empty;
         }
     }
 }

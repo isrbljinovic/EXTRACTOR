@@ -13,8 +13,8 @@ namespace EXTRACTOR.Models
         {
             "Prebaci u CSV",
             "Prebaci u jednu Excel datoteku",
-            "Prebaci u različite Excel datoteke",
-            "Generiraj SQL"
+            "Prebaci u različite Excel datoteke"
+            //,"Generiraj SQL"
         };
     }
 }

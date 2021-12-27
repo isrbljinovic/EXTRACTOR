@@ -17,14 +17,10 @@ if tables != None:
 
 df = tabula.read_pdf(path, pages = 'all')
 
-writer = pd.ExcelWriter(path+'.xlsx', engine='xlsxwriter')
-
 if list_of_tables == None:
     for i in range(len(df)):
-        df[i].to_excel(writer, sheet_name='Sheet'+str(i))
-
+        df[i].to_excel(name+str(i)+'.xlsx')
 else:
     for i in range(len(list_of_tables)):
-        df[list_of_tables[i]].to_excel(writer, sheet_name='Sheet'+str(list_of_tables[i]))
+        df[list_of_tables[i]].to_excel(name+str(list_of_tables[i])+'.xlsx')
 
-writer.save()

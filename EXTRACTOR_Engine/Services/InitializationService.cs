@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using EXTRACTOR_Engine.Contracts;
 
 namespace EXTRACTOR_Engine.Services
@@ -9,10 +8,23 @@ namespace EXTRACTOR_Engine.Services
     {
         public bool Initialize()
         {
-            throw new NotImplementedException();
+            ProcessStartInfo processInfo;
+            Process process;
+
+            processInfo = new ProcessStartInfo("cmd.exe", "/c " + "pipsetup.bat");
+            processInfo.CreateNoWindow = true;
+            processInfo.UseShellExecute = false;
+            // *** Redirect the output ***
+            //processInfo.RedirectStandardError = true;
+            //processInfo.RedirectStandardOutput = true;
+
+            process = Process.Start(processInfo);
+            process.WaitForExit();
+            process.Close();
+            return true;
         }
 
-        private string GetPythonPath()
+        public string GetPythonPath()
         {
             string[] entries = Environment.GetEnvironmentVariable("path").Split(';');
             string pyPath = "";
