@@ -17,16 +17,16 @@ namespace EXTRACTOR_Engine.Enums
             switch (action)
             {
                 case Actions.ToCSVs:
-                    return @"..\..\..\Scripts\TablesToCSVs.py";
+                    return @"Scripts\TablesToCSVs.py";
 
                 case Actions.ToOneFile:
-                    return @"..\..\..\Scripts\TablesToOneFile.py";
+                    return @"Scripts\TablesToOneFile.py";
 
                 case Actions.ToSeparateFiles:
-                    return @"..\..\..\Scripts\TablesToSeparateFiles.py";
+                    return @"Scripts\TablesToSeparateFiles.py";
 
                 case Actions.ToSQL:
-                    return @"..\..\..\Scripts\TableToSql.py";
+                    return @"Scripts\TableToSql.py";
 
                 default:
                     throw new ArgumentException();

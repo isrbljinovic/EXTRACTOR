@@ -45,13 +45,13 @@
                 Grid.Column="0"
                 Margin="5,5,2.5,5"
                 Click="AddFilesClicked"
-                Content="Add PDFs" />
+                Content="Otvori" />
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="2.5,5,5,5"
                 Command="{Binding DeleteCommand}"
-                Content="Delete" />
+                Content="Obriši" />
         </Grid>
         <!--#endregion-->
 
@@ -90,7 +90,7 @@
                 Grid.Row="5"
                 Margin="5,0,5,5"
                 Command="{Binding GenerateCommand}"
-                Content="Generate" />
+                Content="Generiraj" />
         </Grid>
         <!--#endregion-->
     </Grid>

@@ -10,18 +10,29 @@ namespace EXTRACTOR_Engine.Services
         {
             ProcessStartInfo processInfo;
             Process process;
+            string result = string.Empty;
+            string error = string.Empty;
 
-            processInfo = new ProcessStartInfo("cmd.exe", "/c " + "pipsetup.bat");
-            processInfo.CreateNoWindow = true;
+            processInfo = new ProcessStartInfo("cmd.exe", "/c" + "pip install tabula");
+            processInfo.CreateNoWindow = false;
             processInfo.UseShellExecute = false;
             // *** Redirect the output ***
-            //processInfo.RedirectStandardError = true;
-            //processInfo.RedirectStandardOutput = true;
+            processInfo.RedirectStandardError = true;
+            processInfo.RedirectStandardOutput = true;
 
             process = Process.Start(processInfo);
             process.WaitForExit();
-            process.Close();
-            return true;
+            if (process.ExitCode == 0)
+            {
+                result = process.StandardOutput.ReadToEnd();
+                return true;
+            }
+            else
+            {
+                error = process.StandardError.ReadToEnd();
+                result = process.StandardOutput.ReadToEnd();
+                return false;
+            }
         }
 
         public string GetPythonPath()

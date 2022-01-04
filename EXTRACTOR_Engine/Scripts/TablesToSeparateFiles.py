@@ -1,10 +1,26 @@
 import tabula
 import pandas as pd
-df = tabula.read_pdf('C:/Users/Ivan/Desktop/PDF/Table.pdf', pages = 'all')
+import sys
 
-df[0].to_excel('file_'+str(16)+'.xlsx')
-df[0].to_csv('file_'+str(16)+'.csv')
+path = sys.argv[1]
+name = sys.argv[2]
+tables = None
+if len(sys.argv) == 4:
+    tables = sys.argv[3]
 
+list_of_tables = None
 
-for i in range(len(df)):
- df[i].to_excel('file_'+str(i)+'.xlsx')
+if tables != None:
+    lista = tables.split()
+    mapa = map(int, lista)
+    list_of_tables = list(mapa)
+
+df = tabula.read_pdf(path, pages = 'all')
+
+if list_of_tables == None:
+    for i in range(len(df)):
+        df[i].to_excel(name+str(i)+'.xlsx')
+else:
+    for i in range(len(list_of_tables)):
+        df[list_of_tables[i]].to_excel(name+str(list_of_tables[i])+'.xlsx')
+
