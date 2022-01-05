@@ -86,10 +86,19 @@
                 Grid.Row="4"
                 Grid.Column="3"
                 Content="{Binding Progress}" />
+            <ProgressBar
+                Name="pbStatus"
+                Grid.Row="4"
+                Grid.Column="3"
+                Margin="5"
+                IsIndeterminate="True"
+                Maximum="100"
+                Minimum="0" />
             <Button
+                Name="generateButton"
                 Grid.Row="5"
                 Margin="5,0,5,5"
-                Command="{Binding GenerateCommand}"
+                Click="Button_Click"
                 Content="Generiraj" />
         </Grid>
         <!--#endregion-->

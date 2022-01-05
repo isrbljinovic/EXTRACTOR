@@ -18,6 +18,7 @@ namespace EXTRACTOR
         {
             InitializeComponent();
             _vm = new MainWindowViewModel();
+            pbStatus.Visibility = Visibility.Hidden;
             this.DataContext = _vm;
         }
 
@@ -35,6 +36,17 @@ namespace EXTRACTOR
             }
             _vm.Pdfs = new System.Collections.ObjectModel.ObservableCollection<DocumentOptions>(newList);
             _vm.Progress = string.Empty;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            generateButton.IsEnabled = false;
+            pbStatus.Visibility = Visibility.Visible;
+
+            await _vm.Generate();
+
+            generateButton.IsEnabled = true;
+            pbStatus.Visibility = Visibility.Hidden;
         }
     }
 }

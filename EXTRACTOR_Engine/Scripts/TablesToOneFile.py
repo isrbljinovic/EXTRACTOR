@@ -4,27 +4,23 @@ import sys
 
 path = sys.argv[1]
 name = sys.argv[2]
-tables = None
-if len(sys.argv) == 4:
-    tables = sys.argv[3]
 
-list_of_tables = None
+tables = list()
 
-if tables != None:
-    lista = tables.split()
-    mapa = map(int, lista)
-    list_of_tables = list(mapa)
+if len(sys.argv) >= 4:
+    for i in range(3, len(sys.argv)):
+        tables.append(int(sys.argv[i]) - 1)
 
 df = tabula.read_pdf(path, pages = 'all')
 
 writer = pd.ExcelWriter(path+'.xlsx', engine='xlsxwriter')
 
-if list_of_tables == None:
+if len(tables) == 0:
     for i in range(len(df)):
         df[i].to_excel(writer, sheet_name='Sheet'+str(i))
 
 else:
-    for i in range(len(list_of_tables)):
-        df[list_of_tables[i]].to_excel(writer, sheet_name='Sheet'+str(list_of_tables[i]))
+    for i in range(len(tables)):
+        df[tables[i]].to_excel(writer, sheet_name='Shet'+str((tables[i]+1)))
 
 writer.save()

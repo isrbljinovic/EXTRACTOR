@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using EXTRACTOR.Models;
@@ -45,23 +46,14 @@ namespace EXTRACTOR.ViewModels
 
         #region Commands
 
-        private ICommand _generateCommand;
-
-        public ICommand GenerateCommand
+        public async Task Generate()
         {
-            get { return _generateCommand ?? (_generateCommand = new DelegateCommand(Generate)); }
-        }
+            await Task.Run(() => DoWork());
 
-        private void Generate()
-        {
-            Progress = "Generiranje u tijeku...";
-            foreach (var doc in Pdfs)
-            {
-                pythonScriptRunner.RunScript(@"C:\Python310\python.exe", $"{doc.DocumentPath} {doc.Name} {doc.Tables}", ActionsExtensions.GetAction(doc.Conversion));
-            }
             Progress = "Generiranje završeno";
             Pdfs = new ObservableCollection<DocumentOptions>();
             SelectedItem = null;
+            HandlePropertyChanged();
         }
 
         private ICommand _deleteCommand;
@@ -104,6 +96,14 @@ namespace EXTRACTOR.ViewModels
             catch (ApplicationException ae)
             {
                 MessageBox.Show("Došlo je do problema prilikom inicijalizacije paketa.\n Molimo pokušajte ponovno.");
+            }
+        }
+
+        private void DoWork()
+        {
+            foreach (var doc in Pdfs)
+            {
+                pythonScriptRunner.RunScript(@"C:\Python310\python.exe", $"{doc.DocumentPath} {doc.Name} {doc.Tables}", ActionsExtensions.GetAction(doc.Conversion));
             }
         }
 
